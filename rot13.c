@@ -1,35 +1,41 @@
-#include "main.h"
-/**
-* rot13 - encodes into rot13
-* @cypher: translation
-* Return: printcounter
-*/
-int rot13(char *cypher)
-{
-	int a;
-	int b;
-	int printCounter = 0;
-	char in[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-	char trans[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 
-	if (!cypher)
-		cypher = "";
-	for (a = 0; cypher[a] != '\0'; a++)
+
+#include "main.h"
+#include <stdlib.h>
+
+/**
+ * print_R - prints a string in rot13
+ * @R: string to print
+ *
+ * Return: number of chars printed
+ */
+int print_R(va_list R)
+{
+	char *str;
+	unsigned int a, b;
+	int count = 0;
+	char in[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char out[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+
+	str = va_arg(R, char *);
+	if (str == NULL)
+		str = "(ahyy)";
+	for (a = 0; str[a]; a++)
 	{
-		for (b = 0; b <= 52; b++)
+		for (b = 0; in[b]; b++)
 		{
-			if (cypher[a] == in[b])
+			if (in[b] == str[a])
 			{
-				_putchar(trans[b]);
-				printCounter++;
+				_putchar(out[b]);
+				count++;
 				break;
 			}
 		}
-		if (b == 53)
+		if (!in[b])
 		{
-			_putchar(cypher[a]);
-			printCounter++;
+			_putchar(str[a]);
+			count++;
 		}
 	}
-	return (printCounter);
+	return (count);
 }
