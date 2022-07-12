@@ -1,46 +1,52 @@
-#include <unistd.h>
 #include "main.h"
+
 /**
- * _printf - takes in a string and prints different types of arguments for
- * an unspecified amount of arguments
- * @format: the initial string that tell us what is going to be printed
- * Return: the amount of times we write to stdout
+ * _printf - prints and input into the standard output
+ * @format: the format string
+ * Return: number of bytes printed
  */
+
 int _printf(const char *format, ...)
+
 {
-	int i, count;
+	int sum = 0;
+	va_list ap;
+	char *p, *start;
 
-	int (*f)(va_list);
+	params_t params = PARAMS_INIT;
 
-	va_list list;
+	va_start(ap, format);
 
-	if (format == NULL)
+	if (!format || (format[0] == '%' && !format[1]))/* checking for NULL char */
 		return (-1);
-
-	va_start(list, format);
-	i = count = 0;
-
-	while (format[i] != '\0')
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
+		return (-1);
+	for (p = (char *)format; *p; p++)
 	{
-		if (format[i] == '%')
+		init_params(&params, ap);
+		if (*p != '%')/*checking for the % specifier*/
 		{
-			if (format[i + 1] == '\0')
-				return (-1);
-			f = get_func(format[i + 1]);
-			if (f == NULL)
-				count += print_nan(format[i], format[i + 1]);
-			else
-				count += f(list);
-			i++;
+			sum += _putchar(*p);
+			continue;
 		}
+		start = p;
+		p++;
+		while (get_flag(p, &params)) /* while char at p is flag character */
+		{
+			p++; /* next character */
+		}
+		p = get_width(p, &params, ap);
+		p = get_precision(p, &params, ap);
+		if (get_modifier(p, &params))
+			p++;
+		if (!get_specifier(p))
+			sum += print_from_to(start, p,
+					params.l_modifier || params.h_modifier ? p - 1 : 0);
 		else
-		{
-			_putchar(format[i]);
-			count++;
-		}
-		i++;
+			sum += get_print_func(p, ap, &params);
 	}
-	va_end(list);
-	return (count);
+	_putchar(BUF_FLUSH);
+	va_end(ap);
+	return (sum);
 }
 
