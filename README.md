@@ -108,5 +108,5 @@ project_junkyard
 Function files used to run various tests on the _printf Function.
 
 Authors
-Brian Murithi  bm.mutwiri@gmail.com
+Brian Murithi Murithi  bm.mutwiri@gmail.com
 Mercy Chebet
