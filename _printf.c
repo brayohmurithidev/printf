@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
  * _printf - prints anything (output) according to a format
  * @format: character string (c, s, %)
