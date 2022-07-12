@@ -69,5 +69,5 @@ buffer_t *init_buffer(void)
 	output->start = output->buffer;
 	output->len = 0;
 
-	return (output);
+	return (output)
 }

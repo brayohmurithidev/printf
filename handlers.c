@@ -111,7 +111,7 @@ int handle_width(va_list args, const char *modifier, char *index)
  * handle_precision - Matches a precision modifier with
  *                    its corresponding value.
  * @args: A va_list of arguments.
-* @modifier: A pointer to a potential precision modifier.
+ * @modifier: A pointer to a potential precision modifier.
  * @index: An index counter for the original format string.
  *
  * Return: If a precision modifier is matched - its value.
